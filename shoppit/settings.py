@@ -33,7 +33,7 @@ SECRET_KEY = "django-insecure-%q2)y3*k$!(0p&un8$*vy#+k9ac((=-+@r-zr!76(abznklm2p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["rizashop-api.onrender.com","localhost","127.0.0.1"]
 
 
 # Application definition
