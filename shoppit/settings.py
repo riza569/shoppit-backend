@@ -165,7 +165,7 @@ SIMPLE_JWT = {
     'TOKEN_OBTAIN_SERIALIZER': 'core.utils.CustomTokenObtainPairSerializer',
     
     # You might also want to extend the token life for testing:
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=25),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     # ... include any other SIMPLE_JWT settings you may have configured ...
 }
