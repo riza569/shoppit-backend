@@ -53,15 +53,47 @@ def product_in_cart(request):
     return Response({"product_in_cart":product_exists_in_cart})
     
     
-@api_view(["GET"])
+@api_view(['GET'])
 def get_cart_stat(request):
-    cart_code=request.query_params.get('cart_code')
-    cart=Cart.objects.get(cart_code=cart_code,paid=False)
+    """
+    Fetches the number of items and total price for a given cart_code.
+    Returns 404 if the cart does not exist.
+    """
+    cart_code = request.GET.get('cart_code')
     
-    serializer=SimpleCartSerializer(cart)
-    return Response(serializer.data)
+    if not cart_code:
+        # Should not happen if frontend is working, but safe practice
+        return Response(
+            {"detail": "Cart code is required."}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
+    try:
+        # Use .get() inside a try-except block, or use get_object_or_404
+        cart = Cart.objects.get(cart_code=cart_code)
+        
+        # Prepare the response data (assuming Cart has these methods/properties)
+        data = {
+            "num_of_items": cart.items.count(), # Or cart.num_of_items if pre-calculated
+            "sum_total": cart.sum_total # Or cart.calculate_total()
+        }
+        
+        return Response(data, status=status.HTTP_200_OK)
 
+    # 💥 CRITICAL FIX: Catch the specific DoesNotExist error
+    except Cart.DoesNotExist:
+        # Return a graceful 404 response instead of crashing the server
+        return Response(
+            {"detail": "Cart matching query does not exist."}, 
+            status=status.HTTP_404_NOT_FOUND
+        )
+    except Exception as e:
+        # Catch any other unexpected server errors (e.g., database connection issues)
+        print(f"Unexpected error in get_cart_stat: {e}")
+        return Response(
+            {"detail": "An unexpected server error occurred."}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
     
 @api_view(["GET"])
 def get_cart(request):
