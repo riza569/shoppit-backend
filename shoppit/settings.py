@@ -66,7 +66,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React development server
     "http://localhost:5174",  # Vue development server
-    "http://localhost:5175",  # Vue development server
+    "http://localhost:5175",
+    "https://rizashop.onrender.com",  # Vue development server
      # Alternative localhost format
 ]
 
