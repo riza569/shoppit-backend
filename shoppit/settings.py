@@ -170,7 +170,3 @@ SIMPLE_JWT = {
 
 
 REACT_BASE_URL=os.getenv("REACT_BASE_URL","http://localhost:5173")
-
-"default":{
-    "BACKEND": "django.core.files.storage.FileSystemStorage",
-}
